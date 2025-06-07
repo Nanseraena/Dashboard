@@ -1,27 +1,61 @@
-import React from 'react';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import {
+  ChartBarIcon,
+  UsersIcon,
+  ShoppingCartIcon,
+  CogIcon,
+  HomeIcon,
+} from "@heroicons/react/24/outline";
 
-interface SidebarProps {
-  isOpen: boolean;
-  toggleSidebar: () => void;
-}
+const Sidebar: React.FC<{ isOpen: boolean; toggleSidebar: () => void }> = ({
+  isOpen,
+  toggleSidebar,
+}) => {
+  const navItems = [
+    { name: "Dashboard", icon: HomeIcon, path: "/" },
+    { name: "Analytics", icon: ChartBarIcon, path: "/analytics" },
+    { name: "Customers", icon: UsersIcon, path: "/customers" },
+    { name: "Orders", icon: ShoppingCartIcon, path: "/orders" },
+    { name: "Settings", icon: CogIcon, path: "/settings" },
+  ];
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => (
-  <div className={`fixed top-0 left-0 h-full bg-gray-900 text-white w-64 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
-    <div className="p-4">
-      <h2 className="text-xl font-semibold">Menu</h2>
-      <ul className="mt-4">
-        <li className="py-2"><a href="#" className="hover:text-blue-300">Home</a></li>
-        <li className="py-2"><a href="#" className="hover:text-blue-300">Customers</a></li>
-        <li className="py-2"><a href="#" className="hover:text-blue-300">Orders</a></li>
-        <li className="py-2"><a href="#" className="hover:text-blue-300">Reports</a></li>
-      </ul>
+  return (
+    <div
+      className={`fixed md:relative inset-y-0 left-0 w-64 bg-gray-800 text-white transition-all duration-300 transform ${
+        isOpen
+          ? "translate-x-0 md:translate-x-0"
+          : "-translate-x-full md:translate-x-0"
+      } z-30`}
+    >
+      <div className="flex items-center justify-center h-16 px-4 border-b border-gray-700">
+        <h1 className="text-xl font-semibold">Admin Dashboard</h1>
+      </div>
+
+      <nav className="p-4">
+        <ul className="space-y-2">
+          {navItems.map((item) => (
+            <li key={item.name}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `flex items-center p-3 rounded-lg transition-colors ${
+                    isActive
+                      ? "bg-blue-600 text-white"
+                      : "hover:bg-gray-700 text-gray-300"
+                  }`
+                }
+                onClick={toggleSidebar}
+              >
+                <item.icon className="w-5 h-5 mr-3" />
+                <span>{item.name}</span>
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
-    <button onClick={toggleSidebar} className="absolute top-4 right-4 text-white">
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-  </div>
-);
+  );
+};
 
 export default Sidebar;

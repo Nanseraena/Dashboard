@@ -1,12 +1,12 @@
-import React, { lazy, Suspense, useMemo } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-const Dashboard = lazy(() => import("./components/Dashboard"));
+const Dashboard = lazy(() => import('./components/Dashboard'));
 
 const App: React.FC = () => {
-  const router = useMemo(
-    () => (
-      <Router>
+  return (
+    <Router>
+      <div className="flex flex-col min-h-screen">
         <Suspense
           fallback={
             <div className="flex items-center justify-center min-h-screen">
@@ -18,12 +18,9 @@ const App: React.FC = () => {
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </Suspense>
-      </Router>
-    ),
-    []
+      </div>
+    </Router>
   );
-
-  return <div className="flex flex-col min-h-screen">{router}</div>;
 };
 
 export default App;

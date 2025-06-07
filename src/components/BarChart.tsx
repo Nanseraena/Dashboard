@@ -11,9 +11,9 @@ const BarChart: React.FC = () => {
     }],
   };
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
+    <div className="h-full">
       <h3 className="text-lg font-semibold text-gray-700 mb-4">Monthly Orders</h3>
-      <div className="h-64">
+      <div className="h-[250px]">
         <Bar data={data} options={{ maintainAspectRatio: false }} />
       </div>
     </div>
